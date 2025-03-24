@@ -1,4 +1,5 @@
 import './App.css'
+import Forum from './components/Forum'
 import { useContext, useEffect, useState } from 'react'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
@@ -32,7 +33,7 @@ function App() {
 
   return (
     <SupabaseContext.Provider value={supabase}>
-      <div>forum</div>
+      <Forum />
     </SupabaseContext.Provider>
   )
 }
