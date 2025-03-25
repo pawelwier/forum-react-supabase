@@ -15,7 +15,11 @@ function Forum() {
   async function getPosts() {
     const { data } = await supabase
       .from('posts')
-      .select('*')
+      .select(`
+        id,
+        content,
+        profiles (email)
+      `)
       .order('created_at')
 
     setPosts(data)
@@ -24,19 +28,28 @@ function Forum() {
   supabase.channel('custom-all-channel')
     .on(
       'postgres_changes',
-      { event: '*', schema: 'public', table: 'posts' },
+      { 
+        event: '*',
+        schema: 'public',
+        table: 'posts' 
+      },
       getPosts
     )
     .subscribe()
 
   return (
     <>
-      {
-        posts.map((post) => (
-          <Post post={post} key={post.id} />    
-        ))
-      }
-
+      <div className="
+        w-[30rem]
+        flex flex-col gap-4
+        mb-6  
+      ">
+        {
+          posts.map((post) => (
+            <Post post={post} key={post.id} />    
+          ))
+        }
+      </div>
       <LogoutButton />
     </>
   )
