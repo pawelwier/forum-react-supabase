@@ -6,9 +6,9 @@ import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { SupabaseContext } from './app'
 
 function App() {
-  const supabase = useContext(SupabaseContext)
-
   const [session, setSession] = useState(null)
+  
+  const { supabase, user } = useContext(SupabaseContext)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -32,7 +32,7 @@ function App() {
   }
 
   return (
-    <SupabaseContext.Provider value={supabase}>
+    <SupabaseContext.Provider value={{ supabase, user }}>
       <Forum />
     </SupabaseContext.Provider>
   )

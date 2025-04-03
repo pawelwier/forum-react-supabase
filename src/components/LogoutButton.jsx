@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { SupabaseContext } from "../app"
 
 function LogoutButton() {
-  const supabase = useContext(SupabaseContext)
+  const { supabase } = useContext(SupabaseContext)
   
   async function logout() {
     await supabase.auth.signOut()

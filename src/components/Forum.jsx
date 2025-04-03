@@ -6,7 +6,7 @@ import LogoutButton from './LogoutButton'
 function Forum() {
   const [posts, setPosts] = useState([])
 
-  const supabase = useContext(SupabaseContext)
+  const { supabase } = useContext(SupabaseContext)
 
   useEffect(() => {
     getPosts()
@@ -40,7 +40,7 @@ function Forum() {
   return (
     <>
       <div className="
-        w-[30rem]
+        w-[50rem]
         flex flex-col gap-4
         mb-6  
       ">

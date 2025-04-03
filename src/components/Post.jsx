@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { SupabaseContext } from "../app"
 
 function Post({ post }) {
-  const supabase = useContext(SupabaseContext)
+  const { supabase } = useContext(SupabaseContext)
 
   const { id, content, profiles: { email } } = post
 
