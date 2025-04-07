@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import Post from './Post'
 import { SupabaseContext } from '../app'
 import LogoutButton from './LogoutButton'
+import { getPosts, initPostChannel } from '@/controllers/postController'
 
 function Forum() {
   const [posts, setPosts] = useState([])
@@ -9,33 +10,14 @@ function Forum() {
   const { supabase } = useContext(SupabaseContext)
 
   useEffect(() => {
-    getPosts()
+    loadPosts()
   }, [])
   
-  async function getPosts() {
-    const { data } = await supabase
-      .from('posts')
-      .select(`
-        id,
-        content,
-        profiles (email)
-      `)
-      .order('created_at')
-
-    setPosts(data)
+  async function loadPosts() {
+    getPosts(supabase, setPosts)
   }
 
-  supabase.channel('custom-all-channel')
-    .on(
-      'postgres_changes',
-      { 
-        event: '*',
-        schema: 'public',
-        table: 'posts' 
-      },
-      getPosts
-    )
-    .subscribe()
+  initPostChannel(supabase, loadPosts)
 
   return (
     <>

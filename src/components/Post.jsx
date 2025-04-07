@@ -1,16 +1,15 @@
 import { useContext } from "react"
 import { SupabaseContext } from "../app"
+import { updatePost } from "@/controllers/postController"
 
 function Post({ post }) {
-  const { supabase } = useContext(SupabaseContext)
+  const { supabase, user } = useContext(SupabaseContext)
 
-  const { id, content, profiles: { email } } = post
+  const { content, profiles: { email } } = post
+  const isAuthor = user.email == email
 
-  async function updatePost() {
-    await supabase
-      .from('posts')
-      .update({ content: `${content} edited` })
-      .eq('id', id)
+  function editPost() {
+    updatePost(supabase, post)
   }
 
   return (
@@ -28,10 +27,13 @@ function Post({ post }) {
         <div>
           {content}
         </div>
-        <button
-          onClick={updatePost}
-          className="text-white"
-        >edit</button>
+        {
+          isAuthor &&
+          <button
+            onClick={editPost}
+            className="text-white"
+          >edit</button>
+        }
       </div>
     </div>
   )
