@@ -1,15 +1,24 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { SupabaseContext } from "../app"
 import { updatePost } from "@/controllers/postController"
+import EditPostInput from "./EditPostInput"
+import { isAuthor } from "@/utils"
 
 function Post({ post }) {
+  const [isEdit, setIsEdit] = useState(false)
+
   const { supabase, user } = useContext(SupabaseContext)
 
-  const { content, profiles: { email } } = post
-  const isAuthor = user.email == email
+  const { id, content, profiles: { email } } = post
 
-  function editPost() {
-    updatePost(supabase, post)
+  function editPost(content) {
+    updatePost(supabase, { id, content })
+
+    closeEdit()
+  }
+
+  function closeEdit() {
+    setIsEdit(false)
   }
 
   return (
@@ -20,19 +29,28 @@ function Post({ post }) {
       
       <div className="
         min-h-20
-        flex justify-between gap-2
+        flex justify-between items-center gap-2
         p-2
         bg-sky-200 text-black
       ">
-        <div>
-          {content}
-        </div>
         {
-          isAuthor &&
+          isEdit 
+            ? <EditPostInput
+                content={content}
+                onEdit={editPost}
+                onCancel={closeEdit}  
+              />
+            : <div>
+                {content}
+              </div>
+        }
+        {
+          !isEdit && isAuthor(post, user) &&
+          // TODO: move to PostControls
           <button
-            onClick={editPost}
+            onClick={() => { setIsEdit(true) }}
             className="text-white"
-          >edit</button>
+          >Edit</button>
         }
       </div>
     </div>

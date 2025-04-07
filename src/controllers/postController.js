@@ -11,11 +11,10 @@ export async function getPosts(sb, cb) {
   cb(data)
 }
 
-export async function updatePost(sb, { id, content }) {
+export async function updatePost(sb, { content, id }) {
   await sb
     .from('posts')
-    // TODO: get real update content
-    .update({ content: `${content} edited` })
+    .update({ content })
     .eq('id', id)
 }
 
