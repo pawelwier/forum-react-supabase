@@ -22,7 +22,7 @@ function App() {
     return () => subscription.unsubscribe()
   }, [])
 
-  if (!session) {
+  if (!session || !user) {
     return (
       <Auth 
         supabaseClient={supabase} 
