@@ -6,11 +6,4 @@ const supabase = createClient(
   import.meta.env.VITE_ANON_KEY
 )
 
-const {
-  data: { user },
-} = await supabase.auth.getUser()
-
-export const SupabaseContext = createContext({
-  supabase,
-  user
-})
+export const SupabaseContext = createContext({ supabase })

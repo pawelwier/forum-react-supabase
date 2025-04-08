@@ -7,8 +7,9 @@ import { SupabaseContext } from './app'
 
 function App() {
   const [session, setSession] = useState(null)
+  const [user, setUser] = useState(null)
   
-  const { supabase, user } = useContext(SupabaseContext)
+  const { supabase } = useContext(SupabaseContext)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -18,6 +19,8 @@ function App() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
+
+      setUser(session?.user || null)
     })
     return () => subscription.unsubscribe()
   }, [])
