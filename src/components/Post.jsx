@@ -1,8 +1,9 @@
 import { useContext, useState } from "react"
 import { SupabaseContext } from "../app"
-import { updatePost } from "@/controllers/postController"
+import { removePost, updatePost } from "@/controllers/postController"
 import EditPostInput from "./EditPostInput"
 import { isAuthor } from "@/utils"
+import PostControls from "./PostControls"
 
 function Post({ post }) {
   const [isEdit, setIsEdit] = useState(false)
@@ -11,10 +12,14 @@ function Post({ post }) {
 
   const { id, content, profiles: { email } } = post
 
-  function editPost(content) {
-    updatePost(supabase, { id, content })
+  async function editPost(content) {
+    await updatePost(supabase, { id, content })
 
     closeEdit()
+  }
+
+  async function deletePost() {
+    if (confirm('Are you sure?')) await removePost(supabase, id)
   }
 
   function closeEdit() {
@@ -45,12 +50,12 @@ function Post({ post }) {
               </div>
         }
         {
-          !isEdit && isAuthor(post, user) &&
-          // TODO: move to PostControls
-          <button
-            onClick={() => { setIsEdit(true) }}
-            className="text-white"
-          >Edit</button>
+          !isEdit && isAuthor(post, user) && (
+            <PostControls
+              onEdit={setIsEdit}
+              onDelete={deletePost}  
+            />
+          )
         }
       </div>
     </div>

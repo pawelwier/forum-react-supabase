@@ -18,6 +18,13 @@ export async function updatePost(sb, { content, id }) {
     .eq('id', id)
 }
 
+export async function removePost(sb, id) {
+  await sb
+    .from('posts')
+    .delete()
+    .eq('id', id)
+}
+
 export function initPostChannel(sb, cb) {
   sb.channel('custom-all-channel')
     .on(
