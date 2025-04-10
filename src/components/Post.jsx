@@ -29,7 +29,7 @@ function Post({ post }) {
   return (
     <div>
       <div className="
-        bg-sky-700  
+        bg-sky-700
       ">{email}</div>
       
       <div className="

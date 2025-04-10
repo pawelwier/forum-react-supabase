@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { SupabaseContext } from './app'
+import Layout from './components/layout/Layout'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -36,7 +37,9 @@ function App() {
 
   return (
     <SupabaseContext.Provider value={{ supabase, user }}>
-      <Forum />
+      <Layout>
+        <Forum />
+      </Layout>
     </SupabaseContext.Provider>
   )
 }

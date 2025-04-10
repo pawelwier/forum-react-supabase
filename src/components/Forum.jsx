@@ -20,20 +20,17 @@ function Forum() {
   initPostChannel(supabase, loadPosts)
 
   return (
-    <>
-      <div className="
-        w-[50rem]
-        flex flex-col gap-4
-        mb-6  
-      ">
-        {
-          posts.map((post) => (
-            <Post post={post} key={post.id} />    
-          ))
-        }
-      </div>
-      <LogoutButton />
-    </>
+    <div className="
+      w-[50rem]
+      flex flex-col gap-4
+      m-10
+    ">
+      {
+        posts.map((post) => (
+          <Post post={post} key={post.id} />    
+        ))
+      }
+    </div>
   )
 }
 
