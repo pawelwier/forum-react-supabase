@@ -3,10 +3,10 @@ import Header from "./Header"
 
 // TODO: refactor CSS element position etc
 
-function Layout({ children }) {
+function Layout({ children, user }) {
   return (
     <div className="contents">
-      <Header />
+      <Header user={user} />
       <main>{children}</main>
       <Footer />
     </div>

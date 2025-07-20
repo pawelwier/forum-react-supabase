@@ -1,16 +1,21 @@
 import { NavLink } from "react-router";
 
-function Header() {
+function Header({user}) {
   return (
     <div className="
       fixed
-      w-full h-16
-      flex justify-center items-center
+      w-full h-16 px-4
+      flex justify-between items-center
       bg-sky-700
-      text-3xl uppercase
+      uppercase
     ">
-      <NavLink to="/" className="px-4 !text-white">Forms</NavLink>
-      <NavLink to="/forum" className="px-4 !text-white">Forum</NavLink>
+      <div className="flex gap-4 text-3xl">
+        <NavLink to="/" className="!text-white">Forms</NavLink>
+        <NavLink to="/forum" className="!text-white">Forum</NavLink>
+      </div>
+      <div className="text-xl">
+        {user?.email}
+      </div>
     </div>
   )
 }

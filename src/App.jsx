@@ -40,7 +40,7 @@ function App() {
   return (
     <SupabaseContext.Provider value={{ supabase, user }}>
         <BrowserRouter>
-          <Layout>
+          <Layout user={user}>
             <Routes>
               <Route path="/" element={<Forms />} />
               <Route path="/forum" element={<Forum />} />
