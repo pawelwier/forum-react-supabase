@@ -5,6 +5,8 @@ import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { SupabaseContext } from './app'
 import Layout from './components/layout/Layout'
+import { BrowserRouter, Route, Routes } from 'react-router'
+import Forms from './components/forms/Forms'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -37,9 +39,14 @@ function App() {
 
   return (
     <SupabaseContext.Provider value={{ supabase, user }}>
-      <Layout>
-        <Forum />
-      </Layout>
+        <BrowserRouter>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Forms />} />
+              <Route path="/forum" element={<Forum />} />
+            </Routes>
+          </Layout>
+        </BrowserRouter>
     </SupabaseContext.Provider>
   )
 }
