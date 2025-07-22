@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import Post from './Post'
-import { SupabaseContext } from '../app'
-import LogoutButton from './LogoutButton'
 import { getPosts, initPostChannel } from '@/controllers/postController'
+import { SupabaseContext } from '@/app'
 
 function Forum() {
   const [posts, setPosts] = useState([])

@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { SupabaseContext } from "../app"
+import { SupabaseContext } from "../../app"
 
 function LogoutButton() {
   const { supabase } = useContext(SupabaseContext)

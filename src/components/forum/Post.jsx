@@ -1,9 +1,9 @@
 import { useContext, useState } from "react"
-import { SupabaseContext } from "../app"
 import { removePost, updatePost } from "@/controllers/postController"
 import EditPostInput from "./EditPostInput"
 import { isAuthor } from "@/utils"
 import PostControls from "./PostControls"
+import { SupabaseContext } from "@/app"
 
 function Post({ post }) {
   const [isEdit, setIsEdit] = useState(false)
