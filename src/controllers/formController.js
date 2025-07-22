@@ -1,27 +1,9 @@
-export async function getForms(sb, cb) {
-  const { data } = await sb
-    .from('forms')
-    .select(`
-      id,
-      name,
-      label,
-      description
-    `)
-    .order('created_at')
+import { getRecords, initChannel } from "@/supabase/db-utils";
 
-  cb(data)
+export async function getForms(sb, cb) {
+  await getRecords(sb, 'forms', ['id', 'name', 'label', 'description'], cb);
 }
 
 export function initFormChannel(sb, cb) {
-  sb.channel('custom-forms-channel')
-    .on(
-      'postgres_changes',
-      { 
-        event: '*',
-        schema: 'public',
-        table: 'forms' 
-      },
-      cb
-    )
-    .subscribe()
+  initChannel(sb, 'forms', cb);
 }

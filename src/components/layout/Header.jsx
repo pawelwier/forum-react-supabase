@@ -1,6 +1,6 @@
 import { NavLink } from "react-router";
 
-function Header({user}) {
+function Header({ user }) {
   return (
     <div className="
       fixed

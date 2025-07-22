@@ -1,14 +1,7 @@
-export async function getPosts(sb, cb) {
-  const { data } = await sb
-    .from('posts')
-    .select(`
-      id,
-      content,
-      profiles (email)
-    `)
-    .order('created_at')
+import { getRecords, initChannel } from "@/supabase/db-utils"
 
-  cb(data)
+export async function getPosts(sb, cb) {
+  await getRecords(sb, 'posts', ['id', 'content', 'profiles (email)'], cb)
 }
 
 export async function updatePost(sb, { content, id }) {
@@ -26,15 +19,5 @@ export async function removePost(sb, id) {
 }
 
 export function initPostChannel(sb, cb) {
-  sb.channel('custom-all-channel')
-    .on(
-      'postgres_changes',
-      { 
-        event: '*',
-        schema: 'public',
-        table: 'posts' 
-      },
-      cb
-    )
-    .subscribe()
+  initChannel(sb, 'posts', cb)
 }
