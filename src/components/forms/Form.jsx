@@ -6,7 +6,8 @@ import { useNavigate } from "react-router"
 function Form({ url, isAdmin = false }) {
   const [form, setForm] = useState(null)
 
-  let navigate = useNavigate()
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const navigate = isAdmin && useNavigate()
   
   const { supabase } = useContext(SupabaseContext)
 
