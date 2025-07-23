@@ -9,14 +9,16 @@ function Forum() {
   const { supabase } = useContext(SupabaseContext)
 
   useEffect(() => {
+    async function loadPosts() {
+      const result = await getPosts(supabase)
+      setPosts(result)
+    }
+    
     loadPosts()
+    initPostChannel(supabase, loadPosts)
   }, [])
   
-  async function loadPosts() {
-    getPosts(supabase, setPosts)
-  }
 
-  initPostChannel(supabase, loadPosts)
 
   return (
     <div className="

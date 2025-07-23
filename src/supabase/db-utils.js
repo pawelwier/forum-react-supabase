@@ -1,16 +1,33 @@
-export async function getRecords(
+export async function getAllRecords(
   supabaseClient,
   tableName,
-  columns = ['*'],
-  cb
+  columns = ['*']
 ) {
   const columnNames = columns.join(', ')
   const { data } = await supabaseClient
     .from(tableName)
     .select(columnNames)
     .order('created_at')
-  cb(data)
+    
+  return data
 }
+
+export async function getQueryRecords(
+  supabaseClient,
+  tableName,
+  query,
+  columns = ['*']
+) {
+  const columnNames = columns.join(', ')
+  const { data } = await supabaseClient
+    .from(tableName)
+    .select(columnNames)
+    .eq(...query)
+    .order('created_at')
+
+  return data
+}
+
 
 export function initChannel(
   supabaseClient,

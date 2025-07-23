@@ -1,7 +1,7 @@
-import { getRecords, initChannel } from "@/supabase/db-utils"
+import { getAllRecords, initChannel } from "@/supabase/db-utils"
 
-export async function getPosts(sb, cb) {
-  await getRecords(sb, 'posts', ['id', 'content', 'profiles (email)'], cb)
+export async function getPosts(sb) {
+  return getAllRecords(sb, 'posts', ['id', 'content', 'profiles (email)'])
 }
 
 export async function updatePost(sb, { content, id }) {

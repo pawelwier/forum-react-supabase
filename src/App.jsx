@@ -7,6 +7,8 @@ import Layout from './components/layout/Layout'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import Forms from './components/forms/Forms'
 import { SupabaseContext } from './app'
+import FormPage from './components/forms/FormPage'
+import Form from './components/forms/Form'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -28,8 +30,15 @@ function App() {
     return () => subscription.unsubscribe()
   }, [])
 
+  // TODO: ugly, refactor
+  const [page, param] = window.location.pathname.substring(1)
+    .split('/')
+  const isFormUrl = page == 'form'
+    
   if (!session || !user) {
-    return (
+    return isFormUrl ? (
+      <Form url={param} />
+    ) : (
       <Auth 
         supabaseClient={supabase} 
         appearance={{ theme: ThemeSupa }} 
@@ -44,6 +53,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Forms />} />
               <Route path="/forum" element={<Forum />} />
+              {/* Admin preview */}
+              <Route path="/form/:url" element={<FormPage isAdmin={!!user} />} />
             </Routes>
           </Layout>
         </BrowserRouter>
